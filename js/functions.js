@@ -4,6 +4,28 @@ var FunctionsGame = function(game) {};
 
 
 FunctionsGame.prototype.preload = function() {
+//animacoes
+    this.game.load.spritesheet('player'   , 'Assets/spritesheets/player.png' , 32, 32, 8);
+    this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
+    this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+
+//tile
+    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
+    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+
+//sounds
+    this.game.load.audio('jumpSound'      ,'Assets/sounds/jump.wav');
+    this.game.load.audio('pickupSound'    ,'Assets/sounds/pickup.wav');
+    this.game.load.audio('hurtSound'      ,'Assets/sounds/hurt3.ogg');
+    this.game.load.audio('enemyDeathSound','Assets/sounds/hit2.ogg');
+    this.game.load.audio('music'          ,'Assets/sounds/mystery.wav');
+    
+
+    
+    
+    
+    
+//old    
     this.game.load.image('bgMenu'       , 'Assets/initial_screen.png');
     this.game.load.image('start'        , 'Assets/big_button_play_on.png');
     this.game.load.image('credits'      , 'Assets/big_button_credits_on.png');       
@@ -21,8 +43,8 @@ FunctionsGame.prototype.preload = function() {
   
     
     
-    this.game.load.audio('music_menu',    ['assets/audio/']);
-    this.game.load.audio('music_game',    ['assets/audio/']);
+    this.game.load.audio('music_menu',    ['assets/audio/Super Circus_01.ogg']);
+    this.game.load.audio('music_game',    ['assets/audio/Circus Tent_01.ogg']);
     
     this.game.load.audio('button_click' , ['assets/audio/Button-SoundBible.com-1420500901_01.ogg']);
     this.game.load.audio('button_switch', ['assets/audio/Switch-SoundBible.com-350629905_01.ogg']);
@@ -37,7 +59,7 @@ FunctionsGame.prototype.create = function() {
 FunctionsGame.prototype.update = function() {
 };
 
-
+//Navegação
 function gotoGame(item) {
     this.button_click = this.game.add.music = this.add.audio('button_click');        
     this.button_click.play();
@@ -70,6 +92,7 @@ function startMenu() {
     this.game.state.start("menu");
 };
 
+//botoes jogo
 function setarSound(item) {
     this.button_switch = this.game.add.music = this.add.audio('button_switch');        
     this.button_switch.play();
@@ -98,3 +121,43 @@ function setarPause(item) {
         this.pause.loadTexture('play');
     }        
 };
+
+//jogo
+function coletarItem(player, item){
+    this.pickupSound.play();
+    item.kill();
+
+//score a definir
+    this.collectedDiamonds++;
+    game.global.score += 100;
+//    this.scoreText.text = "Score: " + game.global.score; 
+    this.textScore.setText(game.global.score);
+
+//se o total de itens essenciais for alcançado, liberar a porta de saída    
+    if (this.collectedDiamonds == this.totalDiamonds){
+//        this.textScore = this.game.add.text(400,100,"GANHOU!!", {fill: '#fff'});
+//        this.textScore.fixedToCamera = true;    
+        this.game.state.start('win');
+    }
+}
+
+function colisaoMortal(player, lava){
+    this.hurtSound.play();    
+    this.level1.setCollision([5,6,13],false,this.lavaLayer);
+//    this.textScore = this.game.add.text(400,300,"PERDEU!!", {fill: '#fff'});
+//    this.textScore.fixedToCamera = true;   
+    this.game.time.events.add(Phaser.Timer.SECOND * 1.5, gotoLose, this);
+}
+
+function colisaoInimigo(player, inimigo){
+    if (player.body.touching.right && inimigo.body.touching.left){
+        this.enemyDeathSound.play();
+//        this.player.body.velocity.y = -200;
+        game.global.score += 100;
+//        this.scoreText.text = "Score: " + game.global.score;
+        this.textScore.setText(game.global.score);
+        
+        inimigo.kill();
+    }
+    else this.game.state.start('lose');
+}  
