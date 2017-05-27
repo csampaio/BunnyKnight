@@ -26,7 +26,7 @@ FunctionsGame.prototype.preload = function() {
     
     
 //old    
-    this.game.load.image('bgMenu'       , 'Assets/initial_screen.png');
+    this.game.load.image('bgMenu'       , 'Assets/screen_title.png');
     this.game.load.image('start'        , 'Assets/big_button_play_on.png');
     this.game.load.image('credits'      , 'Assets/big_button_credits_on.png');       
     this.game.load.image('sound_on'     , 'Assets/button_sound_on.png');
@@ -36,9 +36,9 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('menu'         , 'Assets/button_home_on.png');
     this.game.load.image('pause'        , 'Assets/button_pause.png');
     this.game.load.image('play'         , 'Assets/button_play.png');
-    this.game.load.image('bgGameOver'   , 'Assets/game_over_screen.png');
+    this.game.load.image('bgGameOver'   , 'Assets/screen_game_over.png');
     this.game.load.image('restart'      , 'Assets/button_back_off.png');
-    this.game.load.image('bgCredits'    , 'Assets/credits_screen.png');    
+    this.game.load.image('bgCredits'    , 'Assets/screen_credits.png');    
     this.game.load.image('bgSplash'     , 'Assets/splash_screen.png');
   
     
