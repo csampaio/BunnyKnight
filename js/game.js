@@ -79,18 +79,20 @@ GameState.prototype.create = function () {
         diamond.animations.play('spin');    
     });
         
-//    //Grupo inimigos
-    this.inimigos= this.game.add.physicsGroup();
-//    //criando objetos do tiled
-    this.level1.createFromObjects('Enemies','Gosma', 'enemies', 5, true, false, this.inimigos); 
-    this.inimigos.forEach(function(inimigo){
-        inimigo.anchor.setTo(0.5,0.5);
-        inimigo.body.immovable = true;
-        inimigo.animations.add('spin', [8, 9, 10], 6, true);
-        inimigo.animations.play('spin');    
-        inimigo.body.velocity.x = 100;
-        inimigo.body.bounce.x = 1;
-    });        
+//    //Grupo de raposas lanceiras
+    this.spearfox= this.game.add.physicsGroup();
+//    //Criando raposas lanceiras do tiled
+    this.level1.createFromObjects('Enemies','spearfox','spearfoxSS', 6, true, false, this.spearfox); 
+    this.spearfox.forEach(function(spearfox){
+        spearfox.anchor.setTo(0.5,0.5);
+        spearfox.body.immovable = false;
+        spearfox.body.gravity.y = 750;
+        spearfox.animations.add('walk', [5, 6, 7, 8, 9], 6, true);
+        spearfox.animations.play('walk');    
+        spearfox.body.velocity.x = 100;
+        spearfox.body.bounce.x = 1;
+    });
+    
     
     //Game State
     this.totalDiamonds = this.diamonds.length;
@@ -130,9 +132,9 @@ GameState.prototype.create = function () {
 };
 
 GameState.prototype.update = function () {
-    this.inimigos.forEach(function(inimigo){
-        if (inimigo.body.velocity.x != 0){
-            inimigo.scale.x = 1 * Math.sign(inimigo.body.velocity.x);
+    this.spearfox.forEach(function(spearfox){
+        if (spearfox.body.velocity.x != 0){
+            spearfox.scale.x = 1 * Math.sign(spearfox.body.velocity.x);
         }
     });    
     
@@ -140,8 +142,8 @@ GameState.prototype.update = function () {
     this.game.physics.arcade.overlap(this.player, this.diamonds, coletarItem, null, this);
     this.game.physics.arcade.collide(this.player, this.lavaLayer, colisaoMortal, null, this);
 
-    this.game.physics.arcade.collide(this.inimigos, this.wallsLayer);
-    this.game.physics.arcade.collide(this.player, this.inimigos, colisaoInimigo, null, this);
+    this.game.physics.arcade.collide(this.spearfox, this.wallsLayer);
+    this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);
     
     
     if(this.keys.left.isDown){

@@ -7,7 +7,7 @@ FunctionsGame.prototype.preload = function() {
 //animacoes
     this.game.load.spritesheet('player'   , 'Assets/spritesheets/player.png' , 32, 32, 8);
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
-    this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+    this.game.load.spritesheet('spearfoxSS'  , 'Assets/spritesheets/enemies/spear_550x192_110x64.png', 110, 64, 15);
 
 //tile
     this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
