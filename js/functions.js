@@ -5,7 +5,7 @@ var FunctionsGame = function(game) {};
 
 FunctionsGame.prototype.preload = function() {
 //spritesheets
-    this.game.load.spritesheet('player'   , 'Assets/spritesheets/player.png' , 32, 32, 8);
+    this.game.load.spritesheet('player'   , 'Assets/spritesheets/bunny_52x75.png' , 52, 75, 13);
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
     this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD388x352.png', 194, 88, 8);

@@ -38,7 +38,7 @@ GameState.prototype.create = function () {
     this.level1.addTilesetImage('tiles_level1','mapTiles');
     this.wallsLayerBg = this.level1.createLayer('Bg');
     this.wallsLayer = this.level1.createLayer('Walls');
-    this.lavaLayer = this.level1.createLayer('Lava');
+    this.espinhosLayer = this.level1.createLayer('Lava');
     this.wallsLayer.resizeWorld();
 
     //som    
@@ -47,12 +47,12 @@ GameState.prototype.create = function () {
     this.hurtSound = this.game.add.audio('hurtSound');
     this.enemyDeathSound= this.game.add.audio('enemyDeathSound');
     
-    this.level1.setCollisionByExclusion([9,10,11,12,17,18,19,20],true,this.wallsLayer);
-    this.level1.setCollision([5,6,13],true,this.lavaLayer);
+    this.level1.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.wallsLayer);
+    this.level1.setCollision([23],true,this.espinhosLayer);
     
     // Player
     // Inicializando jogador  
-    this.player = this.game.add.sprite(160, 2700, 'player', 5);
+    this.player = this.game.add.sprite(160, 2600, 'player', 5);
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
     this.player.body.gravity.y = 750;
@@ -60,9 +60,9 @@ GameState.prototype.create = function () {
     
     this.game.camera.follow(this.player);
     
-    this.player.animations.add('walk',[0, 1, 2, 1],6);
-    this.player.animations.add('idle',[5, 5, 5, 5, 5, 5, 6, 5, 6, 5],6);
-    this.player.animations.add('jump',[4],6);
+    this.player.animations.add('walk',[3, 4, 5, 6, 7],6);
+    this.player.animations.add('idle',[8,9],2);
+    this.player.animations.add('jump',[11,12],2);
         
     this.keys = this.game.input.keyboard.createCursorKeys();
     this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -146,7 +146,7 @@ GameState.prototype.update = function () {
     
     this.game.physics.arcade.collide(this.player, this.wallsLayer);
     this.game.physics.arcade.overlap(this.player, this.diamonds, coletarItem, null, this);
-    this.game.physics.arcade.collide(this.player, this.lavaLayer, colisaoMortal, null, this);
+    this.game.physics.arcade.collide(this.player, this.espinhosLayer, colisaoMortal, null, this);
 
     this.game.physics.arcade.collide(this.inimigos, this.wallsLayer);
     this.game.physics.arcade.collide(this.player, this.inimigos, colisaoInimigo, null, this);
@@ -178,7 +178,7 @@ GameState.prototype.update = function () {
     // Se o a barra de espaço ou a tecla cima estiverem pressionadas, e o jogador estiver com a parte de baixo tocando em alguma coisa
     if((this.jumpButton.isDown || this.keys.up.isDown) && (this.player.body.touching.down || this.player.body.onFloor())){
         // Adicione uma velocidade no eixo Y, fazendo o jogador pular
-        this.player.body.velocity.y = -400;
+        this.player.body.velocity.y = -500;
         this.jumpSound.play();
     }
     
