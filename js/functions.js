@@ -9,7 +9,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
     this.game.load.spritesheet('tiles_level1'  , 'Assets/tileset/TileSet_Fase1_Floresta.png', 32, 32);
-    this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD388x352.png', 194, 88, 8);
+    this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD970x88.png', 194, 88, 5);
 
 //tile
 //    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
@@ -33,6 +33,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('bgSplash'     , 'Assets/screens/splash_screen.png');
     this.game.load.image('bgMenu'       , 'Assets/screens/screen_title.png');
     this.game.load.image('bgGameOver'   , 'Assets/screens/screen_game_over.png');
+    this.game.load.image('bgVictory'   , 'Assets/screens/screen_victory.png');
     this.game.load.image('bgMoldura'    , 'Assets/screens/moldura.png');
     
 //HUD
@@ -82,6 +83,9 @@ function gotoLose(item) {
     this.game.state.start('lose');
 };
 
+function gotoWin(item) {
+    this.game.state.start('win');
+};
 
 function gotoMenu(item) {
     this.button_click = this.game.add.music = this.add.audio('button_click');

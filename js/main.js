@@ -11,6 +11,7 @@ game.state.add('menu', MenuState);
 game.state.add('game', GameState);
 game.state.add('credits',CreditsState);
 game.state.add('lose', LoseState);
+game.state.add('win', WinState);
 game.state.add('splash', SplashState);
 game.state.start('functions');
 

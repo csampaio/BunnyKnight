@@ -14,7 +14,8 @@ SplashState.prototype.create = function() {
 //    sprite.alpha = 0;
 //    this.game.add.tween(sprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, false, 0, 1000, true);
     
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoMenu, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoLose, this);
+//    this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoMenu, this);
 };
 
 SplashState.prototype.update = function() {

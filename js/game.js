@@ -141,6 +141,7 @@ GameState.prototype.create = function () {
     this.pause.fixedToCamera = true;  
 
     this.life = this.game.add.sprite(80, 5, 'life', 0);
+    this.life.fixedToCamera = true;  
     this.life.scale.x = 0.6
     this.life.scale.y = 0.6
 

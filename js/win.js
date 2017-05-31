@@ -1,12 +1,12 @@
 "use strict"; 
 
-var LoseState = function(game) {};
+var WinState = function(game) {};
 
-LoseState.prototype.preload = function() {
+WinState.prototype.preload = function() {
 };
 
-LoseState.prototype.create = function() {
-    this.game.add.sprite(0,0, 'bgGameOver')
+WinState.prototype.create = function() {
+    this.game.add.sprite(0,0, 'bgVictory')
 
     this.menu = this.game.add.sprite(10, 10, 'menu')
     this.menu.scale.x = 1.1
@@ -20,14 +20,8 @@ LoseState.prototype.create = function() {
     this.sound.inputEnabled = true;
     this.sound.events.onInputDown.add(setarSound, this);       
     
-    this.restart = this.game.add.sprite(513, 360, 'restart')
-    this.restart.scale.x = 1.1
-    this.restart.scale.y = 1.1
-    this.restart.inputEnabled = true;
-    this.restart.events.onInputDown.add(gotoGame, this);
-
     this.textScore = this.game.add.text(526, 290, game.global.score, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center"});    
 };
 
-LoseState.prototype.update = function() {
+WinState.prototype.update = function() {
 };
