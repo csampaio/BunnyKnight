@@ -8,6 +8,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.spritesheet('player'   , 'Assets/spritesheets/bunny_52x75.png' , 52, 75, 13);
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+    this.game.load.spritesheet('tiles_level1'  , 'Assets/tileset/TileSet_Fase1_Floresta.png', 32, 32);
     this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD388x352.png', 194, 88, 8);
 
 //tile
@@ -164,17 +165,21 @@ function colisaoInimigo(player, inimigo){
 }
 
 function platformFall (player, platform) {
-    //shakeIt(platform, function () {       
+     this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function () {
         this.game.physics.enable(platform);
-        platform.body.gravity.y = 750; 
-    //});
+        platform.body.gravity.y = 750;   
+     }, this);
     
 }
 
+/**
+ * Não ta funcionando ainda
+ * Função usada para tremer objeto 
+ */
 function shakeIt(obj, onCompleteCallback) {    
     var shake = game.add.tween(obj);
-    
-    shake.to({ y: obj.y - 10 }, obj.y + 10, Phaser.Easing.Bounce.In);
+    var pos = obj.y + 10;
+    shake.to({ y:  pos },200, Phaser.Easing.Default, false, 500, 3, true);
     shake.onComplete.add(onCompleteCallback, this);
     shake.start();
 

@@ -82,7 +82,7 @@ GameState.prototype.create = function () {
     
     //Criando plataformas
     this.platforms = this.game.add.physicsGroup();
-    this.level1.createFromObjects('Platforms','platform', 'tiles_level1', 24, true, false, this.platforms);
+    this.level1.createFromObjects('Platforms','platform', 'tiles_level1', 23, true, false, this.platforms);
     this.platforms.forEach( function (platform) {
         platform.body.immovable = true;
     });
