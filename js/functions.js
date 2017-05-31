@@ -10,6 +10,8 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
     this.game.load.spritesheet('tiles_level1'  , 'Assets/tileset/TileSet_Fase1_Floresta.png', 32, 32);
     this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD388x352.png', 194, 88, 8);
+    this.game.load.spritesheet('spearfoxSS'  , 'Assets/spritesheets/enemies/spear_550x192_110x64.png', 110, 64, 15);
+    this.game.load.spritesheet('sensor'  , 'Assets/spritesheets/enemies/sensor.png');
 
 //tile
 //    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
