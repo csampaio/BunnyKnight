@@ -5,6 +5,7 @@ game.global = {
     music : -1,
     sound_sprite: 'sound_on'
 }
+game.player;
 
 game.state.add('functions', FunctionsGame);
 game.state.add('menu', MenuState);

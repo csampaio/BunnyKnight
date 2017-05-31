@@ -8,6 +8,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.spritesheet('player'   , 'Assets/spritesheets/player.png' , 32, 32, 8);
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('spearfoxSS'  , 'Assets/spritesheets/enemies/spear_550x192_110x64.png', 110, 64, 15);
+    this.game.load.spritesheet('sensor'  , 'Assets/spritesheets/enemies/sensor.png');
 
 //tile
     this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
@@ -148,16 +149,19 @@ function colisaoMortal(player, lava){
 //    this.textScore.fixedToCamera = true;   
     this.game.time.events.add(Phaser.Timer.SECOND * 1.5, gotoLose, this);
 }
+function onReach(){
+        console.debug('Ao alcacnce');
+}
 
 function colisaoInimigo(player, inimigo){
-    if (player.body.touching.right && inimigo.body.touching.left){
+    if (inimigo.body.touching.left || inimigo.body.touching.right){
         this.enemyDeathSound.play();
 //        this.player.body.velocity.y = -200;
         game.global.score += 100;
 //        this.scoreText.text = "Score: " + game.global.score;
         this.textScore.setText(game.global.score);
         
-        inimigo.kill();
+        inimigo.animations.play('attack');
     }
     else this.game.state.start('lose');
 }  

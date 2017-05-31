@@ -14,9 +14,8 @@ GameState.prototype.create = function () {
         this.music_game = this.game.add.music = this.add.audio('music_game');        
         this.music_game.loopFull();
     }    
-    
+
     game.paused = false;  
-    
 //ativar sistema de física
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = "#5c82bc";
@@ -81,16 +80,23 @@ GameState.prototype.create = function () {
         
 //    //Grupo de raposas lanceiras
     this.spearfox= this.game.add.physicsGroup();
+    
 //    //Criando raposas lanceiras do tiled
     this.level1.createFromObjects('Enemies','spearfox','spearfoxSS', 6, true, false, this.spearfox); 
     this.spearfox.forEach(function(spearfox){
         spearfox.anchor.setTo(0.5,0.5);
-        spearfox.body.immovable = false;
+        spearfox.body.immovable = true;
         spearfox.body.gravity.y = 750;
         spearfox.animations.add('walk', [5, 6, 7, 8, 9], 6, true);
+        spearfox.animations.add('attack',[14,13,12,11,12,13,14],6,false);
         spearfox.animations.play('walk');    
         spearfox.body.velocity.x = 100;
+        spearfox.body.setSize(64,64,23,0);
         spearfox.body.bounce.x = 1;
+        var sensor = spearfox.addChild(game.make.sprite(32,0,'sensor'));
+        sensor.anchor.setTo(0.5,0.5);
+        game.physics.enable(sensor);
+        //console.debug(spearfox.getChildIndex(sensor));
     });
     
     
@@ -130,20 +136,24 @@ GameState.prototype.create = function () {
     this.pause.events.onInputDown.add(setarPause, this);           
     this.pause.fixedToCamera = true;  
 };
-
 GameState.prototype.update = function () {
+	
     this.spearfox.forEach(function(spearfox){
         if (spearfox.body.velocity.x != 0){
             spearfox.scale.x = 1 * Math.sign(spearfox.body.velocity.x);
         }
-    });    
-    
+    });
+    //this.spearfox.forEach(function teste(spearfox));
+    //teste(this.player);
+    //console.debug(this.spearfox.forEach());    
+    //console.debug(this.game.physics.arcade.distanceBetween(this.spearfox,this.player));
     this.game.physics.arcade.collide(this.player, this.wallsLayer);
     this.game.physics.arcade.overlap(this.player, this.diamonds, coletarItem, null, this);
     this.game.physics.arcade.collide(this.player, this.lavaLayer, colisaoMortal, null, this);
 
     this.game.physics.arcade.collide(this.spearfox, this.wallsLayer);
     this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);
+    this.game.physics.arcade.collide(this.player, this.spearfox.chilren, onReach, null, this);
     
     
     if(this.keys.left.isDown){
@@ -180,3 +190,6 @@ GameState.prototype.update = function () {
                 this.player.animations.play('jump');
     }    
 };
+function teste(player){
+	console.debug(player.x);
+}
