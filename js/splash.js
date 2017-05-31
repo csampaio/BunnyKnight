@@ -8,6 +8,7 @@ SplashState.prototype.preload = function() {
 
 SplashState.prototype.create = function() {
     this.game.add.sprite(0,0, 'bgSplash')
+    game.sound.mute = true;
     
 //    var sprite = this.game.add.sprite(0, 0, 'bgSplash');
 //    sprite.alpha = 0;

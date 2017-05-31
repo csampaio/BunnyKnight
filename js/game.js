@@ -35,7 +35,7 @@ GameState.prototype.create = function () {
     
     
     this.level1 =  this.game.add.tilemap('level1');
-    this.level1.addTilesetImage('tiles','mapTiles');
+    this.level1.addTilesetImage('tiles_level1','mapTiles');
     this.wallsLayerBg = this.level1.createLayer('Bg');
     this.wallsLayer = this.level1.createLayer('Walls');
     this.lavaLayer = this.level1.createLayer('Lava');
@@ -52,7 +52,7 @@ GameState.prototype.create = function () {
     
     // Player
     // Inicializando jogador  
-    this.player = this.game.add.sprite(160, 64, 'player', 5);
+    this.player = this.game.add.sprite(160, 2700, 'player', 5);
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
     this.player.body.gravity.y = 750;
@@ -101,7 +101,10 @@ GameState.prototype.create = function () {
 //    this.scoreText = this.game.add.text(350,50, "Score: 0", {font: "25px Ariak",fill:'#ffffff'});
 //    this.scoreText.fixedToCamera = true;        
     
-    this.textScore = this.game.add.text(180, 10, game.global.score, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
+    this.moldura = this.game.add.sprite(0, 0, 'bgMoldura') 
+    this.moldura.fixedToCamera = true;  
+    
+    this.textScore = this.game.add.text(280, 20, game.global.score, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
     this.textScore.anchor.x = 0.5; 
     this.textScore.fixedToCamera = true;  
    
@@ -127,6 +130,11 @@ GameState.prototype.create = function () {
     this.pause.inputEnabled = true;
     this.pause.events.onInputDown.add(setarPause, this);           
     this.pause.fixedToCamera = true;  
+
+    this.life = this.game.add.sprite(80, 5, 'life', 0);
+    this.life.scale.x = 0.6
+    this.life.scale.y = 0.6
+
 };
 
 GameState.prototype.update = function () {

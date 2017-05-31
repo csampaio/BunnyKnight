@@ -4,50 +4,51 @@ var FunctionsGame = function(game) {};
 
 
 FunctionsGame.prototype.preload = function() {
-//animacoes
+//spritesheets
     this.game.load.spritesheet('player'   , 'Assets/spritesheets/player.png' , 32, 32, 8);
     this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+    this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD388x352.png', 194, 88, 8);
 
 //tile
-    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
-    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+//    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
+//    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image      ('mapTiles' ,'Assets/tileset/TileSet_Fase1_Floresta.png');
+    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
 
 //sounds
+    this.game.load.audio('button_click' , ['assets/audio/Button-SoundBible.com-1420500901_01.ogg']);
+    this.game.load.audio('button_switch', ['assets/audio/Switch-SoundBible.com-350629905_01.ogg']);
+
+//old
     this.game.load.audio('jumpSound'      ,'Assets/sounds/jump.wav');
     this.game.load.audio('pickupSound'    ,'Assets/sounds/pickup.wav');
     this.game.load.audio('hurtSound'      ,'Assets/sounds/hurt3.ogg');
     this.game.load.audio('enemyDeathSound','Assets/sounds/hit2.ogg');
     this.game.load.audio('music'          ,'Assets/sounds/mystery.wav');
     
-
+//screens
+    this.game.load.image('bgCredits'    , 'Assets/screens/screen_credits.png');    
+    this.game.load.image('bgSplash'     , 'Assets/screens/splash_screen.png');
+    this.game.load.image('bgMenu'       , 'Assets/screens/screen_title.png');
+    this.game.load.image('bgGameOver'   , 'Assets/screens/screen_game_over.png');
+    this.game.load.image('bgMoldura'    , 'Assets/screens/moldura.png');
     
-    
-    
+//HUD
+    this.game.load.image('start'        , 'Assets/HUD/big_button_play_on.png'); 
+    this.game.load.image('credits'      , 'Assets/HUD/big_button_credits_on.png');       
+    this.game.load.image('sound_on'     , 'Assets/HUD/button_sound_on.png');
+    this.game.load.image('sound_off'    , 'Assets/HUD/button_sound_off.png');
+    this.game.load.image('menu'         , 'Assets/HUD/button_home_on.png');
+    this.game.load.image('pause'        , 'Assets/HUD/button_pause.png');
+    this.game.load.image('play'         , 'Assets/HUD/button_play.png');
+    this.game.load.image('restart'      , 'Assets/HUD/button_back_off.png'); 
     
 //old    
-    this.game.load.image('bgMenu'       , 'Assets/screen_title.png');
-    this.game.load.image('start'        , 'Assets/big_button_play_on.png');
-    this.game.load.image('credits'      , 'Assets/big_button_credits_on.png');       
-    this.game.load.image('sound_on'     , 'Assets/button_sound_on.png');
-    this.game.load.image('sound_off'    , 'Assets/button_sound_off.png');
-    this.game.load.spritesheet('player' , 'Assets/', 0, 0, 0);
-    
-    this.game.load.image('menu'         , 'Assets/button_home_on.png');
-    this.game.load.image('pause'        , 'Assets/button_pause.png');
-    this.game.load.image('play'         , 'Assets/button_play.png');
-    this.game.load.image('bgGameOver'   , 'Assets/screen_game_over.png');
-    this.game.load.image('restart'      , 'Assets/button_back_off.png');
-    this.game.load.image('bgCredits'    , 'Assets/screen_credits.png');    
-    this.game.load.image('bgSplash'     , 'Assets/splash_screen.png');
-  
-    
-    
+//    this.game.load.spritesheet('player' , 'Assets/', 0, 0, 0);    
     this.game.load.audio('music_menu',    ['assets/audio/Super Circus_01.ogg']);
     this.game.load.audio('music_game',    ['assets/audio/Circus Tent_01.ogg']);
     
-    this.game.load.audio('button_click' , ['assets/audio/Button-SoundBible.com-1420500901_01.ogg']);
-    this.game.load.audio('button_switch', ['assets/audio/Switch-SoundBible.com-350629905_01.ogg']);
 
     game.sound.mute = false;
 };
