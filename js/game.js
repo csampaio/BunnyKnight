@@ -50,6 +50,7 @@ GameState.prototype.create = function () {
     this.level1.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.wallsLayer);
     this.level1.setCollision([23],true,this.espinhosLayer);
     
+    
     // Player
     // Inicializando jogador  
     this.player = this.game.add.sprite(160, 2600, 'player', 5);
@@ -71,13 +72,21 @@ GameState.prototype.create = function () {
     this.diamonds= this.game.add.physicsGroup();
     //criando objetos do tiled
     this.level1.createFromObjects('Items','diamond', 'items', 5, true, false, this.diamonds);
-    
+
     this.diamonds.forEach(function(diamond){
 //        diamond.anchor.setTo(0.5,0.5);
         diamond.body.immovable = true;
         diamond.animations.add('spin', [4, 5, 6, 7, 6, 5], 6, true);
         diamond.animations.play('spin');    
     });
+    
+    //Criando plataformas
+    this.platforms = this.game.add.physicsGroup();
+    this.level1.createFromObjects('Platforms','platform', 'tiles_level1', 24, true, false, this.platforms);
+    this.platforms.forEach( function (platform) {
+        platform.body.immovable = true;
+    });
+
         
 //    //Grupo inimigos
     this.inimigos= this.game.add.physicsGroup();
@@ -145,6 +154,7 @@ GameState.prototype.update = function () {
     });    
     
     this.game.physics.arcade.collide(this.player, this.wallsLayer);
+    this.game.physics.arcade.collide(this.player, this.platforms, platformFall, null, this);    
     this.game.physics.arcade.overlap(this.player, this.diamonds, coletarItem, null, this);
     this.game.physics.arcade.collide(this.player, this.espinhosLayer, colisaoMortal, null, this);
 

@@ -161,4 +161,21 @@ function colisaoInimigo(player, inimigo){
         inimigo.kill();
     }
     else this.game.state.start('lose');
-}  
+}
+
+function platformFall (player, platform) {
+    //shakeIt(platform, function () {       
+        this.game.physics.enable(platform);
+        platform.body.gravity.y = 750; 
+    //});
+    
+}
+
+function shakeIt(obj, onCompleteCallback) {    
+    var shake = game.add.tween(obj);
+    
+    shake.to({ y: obj.y - 10 }, obj.y + 10, Phaser.Easing.Bounce.In);
+    shake.onComplete.add(onCompleteCallback, this);
+    shake.start();
+
+}
