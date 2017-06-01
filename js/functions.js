@@ -10,6 +10,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.spritesheet('life'          , 'Assets/spritesheets/HUD970x88.png', 194, 88, 5);
     this.game.load.spritesheet('tiles_items'   , 'Assets/spritesheets/items.png'  , 32, 32, 16);
     this.game.load.spritesheet('enemies'       , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+    this.game.load.spritesheet('tiles_platform_level1', 'Assets/tileset/TileSet_Fase1_Floresta.png', 32, 32);
     this.game.load.spritesheet('sensor'        , 'Assets/spritesheets/enemies/sensor.png');
 
 //Level1
@@ -213,10 +214,27 @@ function colisaoInimigo(player, inimigo){
 }
 
 function platformFall (player, platform) {
-     this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function () {
-        this.game.physics.enable(platform);
-        platform.body.gravity.y = 750;   
-     }, this);
+    if (player.body.touching.down && platform.body.touching.up) {
+        respawIt(platform, 5, {x: platform.x, y: platform.y});
+         this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function () {
+            this.game.physics.enable(platform);
+            platform.body.gravity.y = 750;   
+         }, this);
+    }
+    
+}
+
+/**
+ * Respaw do objeto na posição após o tempo
+ */
+function respawIt (obj, time, position) {
+    game.time.events.add(Phaser.Timer.SECOND * time, function () {
+        obj.body.gravity.y = 0;
+        obj.body.velocity.y = 0;
+        obj.revive();
+        obj.x = position.x;
+        obj.y = position.y;
+    }, this);
     
 }
 

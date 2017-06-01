@@ -111,7 +111,7 @@ GameState.prototype.create = function () {
 //Grupo Plataformas
     this.platforms = this.game.add.physicsGroup();
 //    this.levelAtual.createFromObjects('Platforms', 'platform', 'tiles_level1'               , 23, true, false, this.platforms);
-    this.levelAtual.createFromObjects('Platforms', 'platform', game.global.tiles_level_atual, 23, true, false, this.platforms); 
+    this.levelAtual.createFromObjects('Platforms', 'platform', 'tiles_platform_level1', 23, true, false, this.platforms); 
     this.platforms.forEach( function (platform) {
         platform.body.immovable = true;
     });
