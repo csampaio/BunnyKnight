@@ -121,7 +121,7 @@ GameState.prototype.create = function () {
     this.Items.forEach(function(item){
 //        item.anchor.setTo(0.5,0.5);
         item.body.immovable = true;
-        item.animations.add('spin', [4, 5, 6, 7, 6, 5], 6, true);
+        item.animations.add('spin', [5, 6, 7, 6, 5], 5, true);
         item.animations.play('spin');    
     }); 
     

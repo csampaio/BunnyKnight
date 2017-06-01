@@ -46,19 +46,16 @@
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"Platforms",
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"Enemies",
          "objects":[
                 {
@@ -76,13 +73,11 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"Items",
          "objects":[
                 {
@@ -304,7 +299,6 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }],
@@ -316,7 +310,7 @@
         {
          "columns":12,
          "firstgid":1,
-         "image":"TileSet_Fase3_Castelo.png",
+         "image":"..\/tileset\/TileSet_Fase3_Castelo.png",
          "imageheight":128,
          "imagewidth":384,
          "margin":0,
@@ -329,7 +323,7 @@
         {
          "columns":4,
          "firstgid":49,
-         "image":"enemies.png",
+         "image":"..\/spritesheets\/enemies.png",
          "imageheight":96,
          "imagewidth":128,
          "margin":0,
@@ -342,7 +336,7 @@
         {
          "columns":4,
          "firstgid":61,
-         "image":"items.png",
+         "image":"..\/spritesheets\/items.png",
          "imageheight":128,
          "imagewidth":128,
          "margin":0,
@@ -353,19 +347,20 @@
          "tilewidth":32
         }, 
         {
-         "columns":1,
+         "columns":5,
          "firstgid":77,
-         "image":"enemies.png",
-         "imageheight":96,
-         "imagewidth":128,
+         "image":"..\/spritesheets\/enemies\/spear_550x192_110x64.png",
+         "imageheight":192,
+         "imagewidth":550,
          "margin":0,
          "name":"spearfoxSS",
          "spacing":0,
-         "tilecount":2,
+         "tilecount":15,
          "tileheight":64,
          "tilewidth":110
         }],
  "tilewidth":32,
- "version":1,
+ "type":"map",
+ "version":"1.0.0",
  "width":100
 }
