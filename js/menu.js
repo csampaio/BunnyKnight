@@ -19,7 +19,7 @@ MenuState.prototype.create = function() {
     this.play.scale.x = 1.1
     this.play.scale.y = 1.1
     this.play.inputEnabled = true;
-    this.play.events.onInputDown.add(gotoGame, this);
+    this.play.events.onInputDown.add(gotoStartGame, this);
     
     this.credits = this.game.add.sprite(450, 400, 'credits')
     this.credits.scale.x = 1.1

@@ -16,11 +16,11 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image      ('tileImageFase1','Assets/tileset/TileSet_Fase1_Floresta.png');
     this.game.load.tilemap    ('tileMapFase1' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
 //Level2 -> AJUSTAR
-    this.game.load.image      ('tileImageFase2','Assets/tileset/TileSet_Fase1_Floresta.png');
-    this.game.load.tilemap    ('tileMapFase2' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image      ('tileImageFase2','Assets/tileset/TileSet_Fase2_Caverna.png');
+    this.game.load.tilemap    ('tileMapFase2' ,'Assets/maps/level2_caverna.json', null, Phaser.Tilemap.TILED_JSON);
 //Level3 -> AJUSTAR
-    this.game.load.image      ('tileImageFase3','Assets/tileset/TileSet_Fase1_Floresta.png');
-    this.game.load.tilemap    ('tileMapFase3' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.image      ('tileImageFase3','Assets/tileset/TileSet_Fase3_Castelo.png');
+    this.game.load.tilemap    ('tileMapFase3' ,'Assets/maps/level3_castelo.json', null, Phaser.Tilemap.TILED_JSON);
 
     
 //sounds
@@ -67,15 +67,21 @@ FunctionsGame.prototype.update = function() {
 };
 
 //Navegação
-function gotoGame(item) {
+function gotoStartGame(item) {
     this.button_click = this.game.add.music = this.add.audio('button_click');        
     this.button_click.play();
     this.game.time.events.add(Phaser.Timer.SECOND * 1, startGame, this);
 };
 
+function gotoRestartGame(item) {
+    this.button_click = this.game.add.music = this.add.audio('button_click');        
+    this.button_click.play();
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, restartGame, this);
+};
+
 function startGame() {
 //Score
-    game.global.score = 0
+//    game.global.score = 0
 //Fase 1 
     game.global.level_atual = 1;
     
@@ -160,9 +166,10 @@ function coletarItem(player, item){
 
 //score a definir
     this.totalItemsCapturados++;
-    game.global.score += 100;
+//    game.global.score += 100;
 //    this.scoreText.text = "Score: " + game.global.score; 
-    this.textScore.setText(game.global.score);
+//    this.textScore.setText(game.global.score);
+    this.textScore.setText(this.totalItems - this.totalItemsCapturados);
 
 //se o total de itens essenciais for alcançado, liberar a porta de saída    
     if (this.totalItemsCapturados == this.totalItems){
@@ -180,28 +187,29 @@ function colisaoMortal(player, lava){
 //    this.level1.setCollision([5,6,13],false,this.lavaLayer);
 //    this.textScore = this.game.add.text(400,300,"PERDEU!!", {fill: '#fff'});
 //    this.textScore.fixedToCamera = true;   
-    this.game.time.events.add(Phaser.Timer.SECOND * 1.5, gotoLose, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoLose, this);
 }
 
 function proximoNivel(player, lava){ 
 //    this.hurtSound.play();    
 //    this.level1.setCollision([5,6,13],false,this.lavaLayer);
     if (this.totalItemsCapturados == this.totalItems){
-        this.game.time.events.add(Phaser.Timer.SECOND * 0.3, gotoNextFase, this);        
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoNextFase, this);        
     }
 }
 
 function colisaoInimigo(player, inimigo){
-    if (player.body.touching.right && inimigo.body.touching.left){
-        this.enemyDeathSound.play();
+    if (player.body.touching.down && inimigo.body.touching.up){
+//        this.enemyDeathSound.play();
 //        this.player.body.velocity.y = -200;
-        game.global.score += 100;
+//        game.global.score += 100;
 //        this.scoreText.text = "Score: " + game.global.score;
-        this.textScore.setText(game.global.score);
-        
+//        this.textScore.setText(game.global.score);        
         inimigo.kill();
     }
-    else this.menu.events.onInputDown.add(gotoLose, this);;
+    else{
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.3, gotoLose, this);         
+    }
 }
 
 function platformFall (player, platform) {

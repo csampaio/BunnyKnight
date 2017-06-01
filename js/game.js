@@ -41,10 +41,10 @@ GameState.prototype.create = function () {
         this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase1');
     }
     else{
-        if (game.global.level_atual == 1){
+        if (game.global.level_atual == 2){
 //Level2 -> AJUSTAR
             this.levelAtual = this.game.add.tilemap('tileMapFase2');
-            game.global.tiles_level_atual = 'tiles_level1';            
+            game.global.tiles_level_atual = 'tiles_level2';            
             this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase2');
         }
         else{
@@ -89,7 +89,7 @@ GameState.prototype.create = function () {
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
     this.game.camera.follow(this.player);    
-    this.player.body.gravity.y = 750;
+    this.player.body.gravity.y = 250;
     this.player.body.collideWorldBounds = true;
     this.player.animations.add('walk',[3, 4, 5, 6, 7],6);
     this.player.animations.add('idle',[8,9],2);
@@ -129,9 +129,9 @@ GameState.prototype.create = function () {
         spearfox.body.velocity.x = 100;
         spearfox.body.setSize(64,64,23,0);
         spearfox.body.bounce.x = 1;
-        var sensor = spearfox.addChild(game.make.sprite(32,0,'sensor'));
-        sensor.anchor.setTo(0.5,0.5);
-        game.physics.enable(sensor);
+//        var sensor = spearfox.addChild(game.make.sprite(32,0,'sensor'));
+//        sensor.anchor.setTo(0.5,0.5);
+//        game.physics.enable(sensor);
         //console.debug(spearfox.getChildIndex(sensor));
     });
     
@@ -143,7 +143,7 @@ GameState.prototype.create = function () {
     this.moldura = this.game.add.sprite(0, 0, 'bgMoldura') 
     this.moldura.fixedToCamera = true;  
     
-    this.textScore = this.game.add.text(280, 20, game.global.score, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
+    this.textScore = this.game.add.text(280, 20, this.totalItems - this.totalItemsCapturados, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
     this.textScore.anchor.x = 0.5; 
     this.textScore.fixedToCamera = true;  
    
@@ -172,10 +172,10 @@ GameState.prototype.create = function () {
     this.pause.fixedToCamera = true;  
 
     //life
-    this.life = this.game.add.sprite(80, 5, 'life', 0);
-    this.life.fixedToCamera = true;  
-    this.life.scale.x = 0.6
-    this.life.scale.y = 0.6
+//    this.life = this.game.add.sprite(80, 5, 'life', 0);
+//    this.life.fixedToCamera = true;  
+//    this.life.scale.x = 0.6
+//    this.life.scale.y = 0.6
 };
 
 GameState.prototype.update = function () {
@@ -190,31 +190,21 @@ GameState.prototype.update = function () {
     this.game.physics.arcade.overlap(this.player, this.Items, coletarItem, null, this);
     this.game.physics.arcade.collide(this.player, this.layerArmadilha, colisaoMortal, null, this);
     this.game.physics.arcade.collide(this.player, this.layerSaida, proximoNivel, null, this);
-
     this.game.physics.arcade.collide(this.spearfox, this.layerPlataforma);
-    //this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);
-    
+    this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);    
     
     if(this.keys.left.isDown){
-        this.player.body.velocity.x = -150; // Ajustar velocidade
-        // Se o jogador estiver virado para a direita, inverter a escala para que ele vire para o outro lado
+        this.player.body.velocity.x = -150;
         if(this.player.scale.x == 1) this.player.scale.x = -1;
         this.player.animations.play('walk');
     }
-    // Se a tecla direita estiver pressionada (this.keys.right.isDown == true),
-    // mover o sprite para a direita
     else if(this.keys.right.isDown){
-        // se a tecla direita estiver pressionada
-        this.player.body.velocity.x = 150;  // Ajustar velocidade
-        // Se o jogador estiver virado para a direita, inverter a escala para que ele vire para o outro lado
+        this.player.body.velocity.x = 150;
         if(this.player.scale.x == -1) this.player.scale.x = 1;
         this.player.animations.play('walk');
     }
     else {
-        // Se nenhuma tecla estiver sendo pressionada:
-        // Ajustar velocidade para zero
         this.player.body.velocity.x = 0;
-        // Executar animação 'idle'
         this.player.animations.play('idle');
     }
 

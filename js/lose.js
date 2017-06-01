@@ -24,7 +24,7 @@ LoseState.prototype.create = function() {
     this.restart.scale.x = 1.1
     this.restart.scale.y = 1.1
     this.restart.inputEnabled = true;
-    this.restart.events.onInputDown.add(gotoGame, this);
+    this.restart.events.onInputDown.add(gotoRestartGame, this);
 
     this.textScore = this.game.add.text(526, 290, game.global.score, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center"});    
 };
