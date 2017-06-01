@@ -12,7 +12,17 @@ GameState.prototype.create = function () {
     if (game.global.music != 2){
         game.global.music = 2;
         game.sound.stopAll();
-        this.music_game = this.game.add.music = this.add.audio('music_game');        
+        if (game.global.level_atual == 1){
+            this.music_game = this.game.add.music = this.add.audio('music_game1');        
+        }
+        else
+        if (game.global.level_atual == 2){
+            this.music_game = this.game.add.music = this.add.audio('music_game2');         
+        }
+        else{
+            this.music_game = this.game.add.music = this.add.audio('music_game3');                    
+        }
+            
         this.music_game.loopFull();
     }    
     

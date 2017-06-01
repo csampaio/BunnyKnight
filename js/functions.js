@@ -53,9 +53,11 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('play'         , 'Assets/HUD/button_play.png');
     this.game.load.image('restart'      , 'Assets/HUD/button_back_off.png'); 
     
-//old    
+//musicas    
     this.game.load.audio('music_menu',    ['assets/audio/Song of the Wise Fox-Logan Epic Canto - Menu Principal.mp3']);
-    this.game.load.audio('music_game',    ['assets/audio/Forest Song-Logan Epic Canto-Medieval Ballad - Primeira Fase.mp3']);
+    this.game.load.audio('music_game1',   ['assets/audio/Forest Song-Logan Epic Canto-Medieval Ballad - Primeira Fase.mp3']);
+    this.game.load.audio('music_game2',   ['assets/audio/For the King - Adrian von Ziegler - Segunda Fase.mp3']);
+    this.game.load.audio('music_game3',   ['assets/audio/Bua No Bas Victory or Death - Adrian von Ziegler - Terceira fase.mp3']); 
     
     game.sound.mute = false;
 };
