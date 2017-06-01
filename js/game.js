@@ -89,7 +89,7 @@ GameState.prototype.create = function () {
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
     this.game.camera.follow(this.player);    
-    this.player.body.gravity.y = 250;
+    this.player.body.gravity.y = 750;
     this.player.body.collideWorldBounds = true;
     this.player.animations.add('walk',[3, 4, 5, 6, 7],6);
     this.player.animations.add('idle',[8,9],2);
