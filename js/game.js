@@ -50,7 +50,7 @@ GameState.prototype.create = function () {
         else{
 //Level3 -> AJUSTAR
             this.levelAtual = this.game.add.tilemap('tileMapFase3');
-            game.global.tiles_level_atual = 'tiles_level1';            
+            game.global.tiles_level_atual = 'tiles_level3';            
             this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase3');            
         }
         
@@ -70,17 +70,17 @@ GameState.prototype.create = function () {
         this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
     }
     else{
-        if (game.global.level_atual == 1){
+        if (game.global.level_atual == 2){
 //Level2 -> AJUSTAR
-            this.levelAtual.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.layerPlataforma);
-            this.levelAtual.setCollision([23],true,this.layerArmadilha);
-            this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
+            this.levelAtual.setCollisionByExclusion([19,20,24,25], true, this.layerPlataforma);
+            this.levelAtual.setCollision([9],true,this.layerArmadilha);
+            this.levelAtual.setCollision([24,25],true,this.layerSaida);
         }
         else{
 //Level3 -> AJUSTAR
-            this.levelAtual.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.layerPlataforma);
-            this.levelAtual.setCollision([23],true,this.layerArmadilha);        
-            this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
+            this.levelAtual.setCollisionByExclusion([7,8,19,20,31,32], true, this.layerPlataforma);
+            this.levelAtual.setCollision([42],true,this.layerArmadilha);        
+            this.levelAtual.setCollision([7,8,19,20,31,32],true,this.layerSaida);
         }        
     }
     
@@ -143,7 +143,7 @@ GameState.prototype.create = function () {
     this.moldura = this.game.add.sprite(0, 0, 'bgMoldura') 
     this.moldura.fixedToCamera = true;  
     
-    this.textScore = this.game.add.text(280, 20, this.totalItems - this.totalItemsCapturados, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
+    this.textScore = this.game.add.text(240, 17, this.totalItems - this.totalItemsCapturados, {font: "bold 32px Arial", fill: "#fff", boundsAlignH: "right"});
     this.textScore.anchor.x = 0.5; 
     this.textScore.fixedToCamera = true;  
    

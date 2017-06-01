@@ -41,7 +41,7 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('bgMenu'       , 'Assets/screens/screen_title.png');
     this.game.load.image('bgGameOver'   , 'Assets/screens/screen_game_over.png');
     this.game.load.image('bgVictory'   , 'Assets/screens/screen_victory.png');
-    this.game.load.image('bgMoldura'    , 'Assets/screens/moldura.png');
+    this.game.load.image('bgMoldura'    , 'Assets/screens/game_frame.png');
     
 //HUD
     this.game.load.image('start'        , 'Assets/HUD/big_button_play_on.png'); 
@@ -54,8 +54,8 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('restart'      , 'Assets/HUD/button_back_off.png'); 
     
 //old    
-    this.game.load.audio('music_menu',    ['assets/audio/Super Circus_01.ogg']);
-    this.game.load.audio('music_game',    ['assets/audio/Circus Tent_01.ogg']);
+    this.game.load.audio('music_menu',    ['assets/audio/Song of the Wise Fox-Logan Epic Canto - Menu Principal.mp3']);
+    this.game.load.audio('music_game',    ['assets/audio/Forest Song-Logan Epic Canto-Medieval Ballad - Primeira Fase.mp3']);
     
     game.sound.mute = false;
 };
@@ -96,9 +96,9 @@ function restartGame() {
 function gotoNextFase() {
 //proxima fase
     game.global.level_atual++;
-    
-    if (game.global.level_atual == 4){
-        this.game.time.events.add(Phaser.Timer.SECOND * 0.1, gotoWin, this);        
+    console.debug(game.global.level_atual);
+    if (game.global.level_atual >= 4){
+        this.game.time.events.add(Phaser.Timer.SECOND, gotoWin, this);        
     }
     else{
         this.game.state.start("game");        
