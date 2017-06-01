@@ -96,6 +96,10 @@ GameState.prototype.create = function () {
     
 //Player
     this.player = this.game.add.sprite(160, 2600, 'player', 5); 
+    if (game.global.level_atual == 2){
+        this.player.x = 10;
+        this.player.y = 10;        
+    }
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
     this.game.camera.follow(this.player);    

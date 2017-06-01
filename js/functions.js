@@ -15,7 +15,7 @@ FunctionsGame.prototype.preload = function() {
 
 //Level1
     this.game.load.image      ('tileImageFase1','Assets/tileset/TileSet_Fase1_Floresta.png');
-    this.game.load.tilemap    ('tileMapFase1' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap    ('tileMapFase1' ,'Assets/maps/level1_floresta.json', null, Phaser.Tilemap.TILED_JSON);
 //Level2 -> AJUSTAR
     this.game.load.image      ('tileImageFase2','Assets/tileset/TileSet_Fase2_Caverna.png');
     this.game.load.tilemap    ('tileMapFase2' ,'Assets/maps/level2_caverna.json', null, Phaser.Tilemap.TILED_JSON);
