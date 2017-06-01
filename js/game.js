@@ -102,12 +102,15 @@ GameState.prototype.create = function () {
     }
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
-    this.game.camera.follow(this.player);    
-    this.player.body.gravity.y = 750;
+    this.game.camera.follow(this.player);
+    this.player.body.gravity.y = game.global.gravidade;                
     this.player.body.collideWorldBounds = true;
     this.player.animations.add('walk',[3, 4, 5, 6, 7],6);
-    this.player.animations.add('idle',[8,9],2);
+    this.player.animations.add('idle',[8,9],2); 
     this.player.animations.add('jump',[11,12],2);
+    this.player.inputEnabled = true;
+    this.player.events.onInputDown.add(setarCheat, this);       
+    
         
     this.keys = this.game.input.keyboard.createCursorKeys();
     this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -193,6 +196,14 @@ GameState.prototype.create = function () {
 };
 
 GameState.prototype.update = function () {
+    if (game.global.cheat == 1){
+        game.global.gravidade = 350; 
+    }
+    else{
+        game.global.gravidade = 750;
+    }
+    this.player.body.gravity.y = game.global.gravidade;                
+    
     this.spearfox.forEach(function(spearfox){
         if (spearfox.body.velocity.x != 0){
             spearfox.scale.x = 1 * Math.sign(spearfox.body.velocity.x);

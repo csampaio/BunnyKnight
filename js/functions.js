@@ -196,7 +196,7 @@ function colisaoMortal(player, lava){
 function proximoNivel(player, lava){ 
 //    this.hurtSound.play();    
 //    this.level1.setCollision([5,6,13],false,this.lavaLayer);
-    if (this.totalItemsCapturados == this.totalItems){
+    if (this.totalItemsCapturados == this.totalItems || game.global.cheat == 1){
         this.game.time.events.add(Phaser.Timer.SECOND * 0.2, gotoNextFase, this);        
     }
 }
@@ -245,10 +245,24 @@ function respawIt (obj, time, position) {
  * Função usada para tremer objeto 
  */
 function shakeIt(obj, onCompleteCallback) {    
-    var shake = game.add.tween(obj);
+    var shake = game.add.tween(obj); 
     var pos = obj.y + 10;
     shake.to({ y:  pos },200, Phaser.Easing.Default, false, 500, 3, true);
-    shake.onComplete.add(onCompleteCallback, this);
+    shake.onComplete.add(onCompleteCallback, this); 
     shake.start();
 
 }
+
+function setarCheat(item) {
+    game.global.click_count++;
+    if (game.global.click_count > 10){
+        game.global.click_count = 0;
+        if (game.global.cheat == 1){
+            game.global.cheat = 0;
+        }
+        else{
+            game.global.cheat = 1;
+        }
+    }
+};
+
