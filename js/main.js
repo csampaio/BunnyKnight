@@ -1,4 +1,4 @@
-var game = new Phaser.Game(840, 480, Phaser.AUTO, 'phaser-canvas');
+var game = new Phaser.Game(840, 480, Phaser.CANVAS, 'phaser-canvas');
 
 game.global = {
 //    score : 0,

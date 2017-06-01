@@ -151,6 +151,23 @@ GameState.prototype.create = function () {
 //        game.physics.enable(sensor);
         //console.debug(spearfox.getChildIndex(sensor));
     });
+    this.axefoxGroup = this.game.add.physicsGroup();
+    this.levelAtual.createFromObjects('Enemies', 'axefox', 'tiles_axefox', 6, true, false, this.axefoxGroup); 
+    this.axefoxGroup.forEach(function(axefox){
+        axefox.anchor.setTo(0.5,0.5);
+        axefox.body.immovable = true;
+        axefox.body.gravity.y = 750;
+        axefox.animations.add('walk', [5, 6, 7, 8, 9, 8, 7, 6], 6, true);
+        axefox.animations.add('attack',[10,11,12,13],6,false);
+        axefox.animations.play('walk');    
+        axefox.body.velocity.x = 75;
+        axefox.body.setSize(140,105,23,0);
+        axefox.body.bounce.x = 1;
+//        var sensor = spearfox.addChild(game.make.sprite(32,0,'sensor'));
+//        sensor.anchor.setTo(0.5,0.5);
+//        game.physics.enable(sensor);
+        //console.debug(spearfox.getChildIndex(sensor));
+    });
     
 //Game State
     this.totalItems = this.Items.length;
@@ -208,6 +225,11 @@ GameState.prototype.update = function () {
         if (spearfox.body.velocity.x != 0){
             spearfox.scale.x = 1 * Math.sign(spearfox.body.velocity.x);
         }
+    });
+    this.axefoxGroup.forEach(function(axefox){
+        if (axefox.body.velocity.x != 0){
+            axefox.scale.x = -1 * Math.sign(axefox.body.velocity.x);
+        }
     });    
     
     this.game.physics.arcade.collide(this.player, this.layerPlataforma);
@@ -217,6 +239,8 @@ GameState.prototype.update = function () {
     this.game.physics.arcade.collide(this.player, this.layerSaida, proximoNivel, null, this);
     this.game.physics.arcade.collide(this.spearfox, this.layerPlataforma);
     this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);    
+    this.game.physics.arcade.collide(this.axefoxGroup, this.layerPlataforma);
+    this.game.physics.arcade.collide(this.player, this.axefoxGroup, colisaoInimigo, null, this);
     
     if(this.keys.left.isDown){
         this.player.body.velocity.x = -150;
