@@ -90,7 +90,7 @@ GameState.prototype.create = function () {
         
 //    //Grupo de raposas lanceiras
     this.spearfox= this.game.add.physicsGroup();
-    
+    this.axefox= this.game.add.physicsGroup();
 //    //Criando raposas lanceiras do tiled
     this.level1.createFromObjects('Enemies','spearfox','spearfoxSS', 6, true, false, this.spearfox); 
     this.spearfox.forEach(function(spearfox){
@@ -108,6 +108,23 @@ GameState.prototype.create = function () {
         game.physics.enable(sensor);
         //console.debug(spearfox.getChildIndex(sensor));
     });
+    
+    this.level1.createFromObjects('Enemies','axefox','axefoxSS', 6, true, false, this.axefox); 
+    this.axefox.forEach(function(axefox){
+        axefox.anchor.setTo(0.5,0.5);
+        axefox.body.immovable = true;
+        axefox.body.gravity.y = 750;
+        axefox.animations.add('walk', [9,8,7,6,5,6,7,8], 6, true);
+        axefox.animations.add('attack',[14,13,12,11],6,false);
+        axefox.animations.play('walk');    
+        axefox.body.velocity.x = 75;
+        axefox.body.setSize(100,105,23,0);
+        axefox.body.bounce.x = 1;
+        var sensor = axefox.addChild(game.make.sprite(32,0,'sensor'));
+        sensor.anchor.setTo(0.5,0.5);
+        game.physics.enable(sensor);
+        //console.debug(spearfox.getChildIndex(sensor));
+    });
     
     //Game State
     this.totalDiamonds = this.diamonds.length;
@@ -160,7 +177,12 @@ GameState.prototype.update = function () {
         if (spearfox.body.velocity.x != 0){
             spearfox.scale.x = 1 * Math.sign(spearfox.body.velocity.x);
         }
-    });    
+    });
+    this.axefox.forEach(function(axefox){
+       if (axefox.body.velocity.x != 0){
+           axefox.scale.x = -1 * Math.sign(axefox.body.velocity.x);
+       }
+    });           
     
     this.game.physics.arcade.collide(this.player, this.wallsLayer);
     this.game.physics.arcade.collide(this.player, this.platforms, platformFall, null, this);    
@@ -168,6 +190,7 @@ GameState.prototype.update = function () {
     this.game.physics.arcade.collide(this.player, this.espinhosLayer, colisaoMortal, null, this);
 
     this.game.physics.arcade.collide(this.spearfox, this.wallsLayer);
+    this.game.physics.arcade.collide(this.axefox, this.wallsLayer);
     //this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);
     
     
