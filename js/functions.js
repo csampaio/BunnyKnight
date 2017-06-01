@@ -202,7 +202,7 @@ function proximoNivel(player, lava){
 }
 
 function colisaoInimigo(player, inimigo){
-    if (player.body.touching.down && inimigo.body.touching.up){
+    if (player.body.touching.down && inimigo.body.touching.up || game.global.cheat == 1){
 //        this.enemyDeathSound.play();
 //        this.player.body.velocity.y = -200;
 //        game.global.score += 100;
