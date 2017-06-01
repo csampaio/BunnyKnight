@@ -660,18 +660,6 @@
                  "width":145,
                  "x":1645,
                  "y":2623
-                }, 
-                {
-                 "gid":184,
-                 "height":111,
-                 "id":100,
-                 "name":"axefox",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":145,
-                 "x":792,
-                 "y":2818
                 }],
          "opacity":1,
          "type":"objectgroup",
