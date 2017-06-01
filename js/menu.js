@@ -12,7 +12,7 @@ MenuState.prototype.create = function() {
         this.music_menu = this.game.add.music = this.add.audio('music_menu');        
         this.music_menu.loopFull();
     }
-    
+
     this.game.add.sprite(0,0, 'bgMenu')
     
     this.play = this.game.add.sprite(220, 400, 'start')

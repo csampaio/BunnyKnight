@@ -5,20 +5,24 @@ var FunctionsGame = function(game) {};
 
 FunctionsGame.prototype.preload = function() {
 //spritesheets
-    this.game.load.spritesheet('player'   , 'Assets/spritesheets/bunny_52x75.png' , 52, 75, 13);
-    this.game.load.spritesheet('items'    , 'Assets/spritesheets/items.png'  , 32, 32, 16);
-    this.game.load.spritesheet('enemies'  , 'Assets/spritesheets/enemies.png', 32, 32, 12);
-    this.game.load.spritesheet('tiles_level1'  , 'Assets/tileset/TileSet_Fase1_Floresta.png', 32, 32);
-    this.game.load.spritesheet('life'     , 'Assets/spritesheets/HUD970x88.png', 194, 88, 5);
-    this.game.load.spritesheet('spearfoxSS'  , 'Assets/spritesheets/enemies/spear_550x192_110x64.png', 110, 64, 15);
-    this.game.load.spritesheet('sensor'  , 'Assets/spritesheets/enemies/sensor.png');
+    this.game.load.spritesheet('player'        , 'Assets/spritesheets/bunny_52x75.png' , 52, 75, 13);
+    this.game.load.spritesheet('tiles_spearfox', 'Assets/spritesheets/enemies/spear_550x192_110x64.png', 110, 64, 15);
+    this.game.load.spritesheet('life'          , 'Assets/spritesheets/HUD970x88.png', 194, 88, 5);
+    this.game.load.spritesheet('tiles_items'   , 'Assets/spritesheets/items.png'  , 32, 32, 16);
+    this.game.load.spritesheet('enemies'       , 'Assets/spritesheets/enemies.png', 32, 32, 12);
+    this.game.load.spritesheet('sensor'        , 'Assets/spritesheets/enemies/sensor.png');
 
-//tile
-//    this.game.load.image      ('mapTiles' ,'Assets/spritesheets/tiles.png');
-//    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.image      ('mapTiles' ,'Assets/tileset/TileSet_Fase1_Floresta.png');
-    this.game.load.tilemap    ('level1'   ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+//Level1
+    this.game.load.image      ('tileImageFase1','Assets/tileset/TileSet_Fase1_Floresta.png');
+    this.game.load.tilemap    ('tileMapFase1' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+//Level2 -> AJUSTAR
+    this.game.load.image      ('tileImageFase2','Assets/tileset/TileSet_Fase1_Floresta.png');
+    this.game.load.tilemap    ('tileMapFase2' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
+//Level3 -> AJUSTAR
+    this.game.load.image      ('tileImageFase3','Assets/tileset/TileSet_Fase1_Floresta.png');
+    this.game.load.tilemap    ('tileMapFase3' ,'Assets/maps/level1_caverna.json', null, Phaser.Tilemap.TILED_JSON);
 
+    
 //sounds
     this.game.load.audio('button_click' , ['assets/audio/Button-SoundBible.com-1420500901_01.ogg']);
     this.game.load.audio('button_switch', ['assets/audio/Switch-SoundBible.com-350629905_01.ogg']);
@@ -49,11 +53,9 @@ FunctionsGame.prototype.preload = function() {
     this.game.load.image('restart'      , 'Assets/HUD/button_back_off.png'); 
     
 //old    
-//    this.game.load.spritesheet('player' , 'Assets/', 0, 0, 0);    
     this.game.load.audio('music_menu',    ['assets/audio/Super Circus_01.ogg']);
     this.game.load.audio('music_game',    ['assets/audio/Circus Tent_01.ogg']);
     
-
     game.sound.mute = false;
 };
 
@@ -72,7 +74,28 @@ function gotoGame(item) {
 };
 
 function startGame() {
+//Score
+    game.global.score = 0
+//Fase 1 
+    game.global.level_atual = 1;
+    
     this.game.state.start("game");
+};
+
+function restartGame() {
+    this.game.state.start("game");
+};
+
+function gotoNextFase() {
+//proxima fase
+    game.global.level_atual++;
+    
+    if (game.global.level_atual == 4){
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.1, gotoWin, this);        
+    }
+    else{
+        this.game.state.start("game");        
+    }
 };
 
 function gotoCredits(item) {
@@ -136,25 +159,36 @@ function coletarItem(player, item){
     item.kill();
 
 //score a definir
-    this.collectedDiamonds++;
+    this.totalItemsCapturados++;
     game.global.score += 100;
 //    this.scoreText.text = "Score: " + game.global.score; 
     this.textScore.setText(game.global.score);
 
 //se o total de itens essenciais for alcançado, liberar a porta de saída    
-    if (this.collectedDiamonds == this.totalDiamonds){
+    if (this.totalItemsCapturados == this.totalItems){
 //        this.textScore = this.game.add.text(400,100,"GANHOU!!", {fill: '#fff'});
 //        this.textScore.fixedToCamera = true;    
-        this.game.state.start('win');
+//        this.game.time.events.add(Phaser.Timer.SECOND * 0.1, gotoWin, this);
+        
+//        TODO: HABILITAR_SAIDA
+//        this.game.time.events.add(Phaser.Timer.SECOND * 0.1, gotoNextFase, this);        
     }
 }
 
 function colisaoMortal(player, lava){
     this.hurtSound.play();    
-    this.level1.setCollision([5,6,13],false,this.lavaLayer);
+//    this.level1.setCollision([5,6,13],false,this.lavaLayer);
 //    this.textScore = this.game.add.text(400,300,"PERDEU!!", {fill: '#fff'});
 //    this.textScore.fixedToCamera = true;   
     this.game.time.events.add(Phaser.Timer.SECOND * 1.5, gotoLose, this);
+}
+
+function proximoNivel(player, lava){ 
+//    this.hurtSound.play();    
+//    this.level1.setCollision([5,6,13],false,this.lavaLayer);
+    if (this.totalItemsCapturados == this.totalItems){
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.3, gotoNextFase, this);        
+    }
 }
 
 function colisaoInimigo(player, inimigo){
@@ -167,7 +201,7 @@ function colisaoInimigo(player, inimigo){
         
         inimigo.kill();
     }
-    else this.game.state.start('lose');
+    else this.menu.events.onInputDown.add(gotoLose, this);;
 }
 
 function platformFall (player, platform) {

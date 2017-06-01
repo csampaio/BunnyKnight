@@ -3,7 +3,9 @@ var game = new Phaser.Game(840, 480, Phaser.AUTO, 'phaser-canvas');
 game.global = {
     score : 0,
     music : -1,
-    sound_sprite: 'sound_on'
+    sound_sprite: 'sound_on',
+    level_atual: 0,
+    tiles_level_atual: ''
 }
 
 game.state.add('functions', FunctionsGame);

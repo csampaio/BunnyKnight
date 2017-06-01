@@ -8,6 +8,7 @@ GameState.prototype.preload = function () {
 
 GameState.prototype.create = function () {
     
+//Musica
     if (game.global.music != 2){
         game.global.music = 2;
         game.sound.stopAll();
@@ -17,50 +18,79 @@ GameState.prototype.create = function () {
     
     game.paused = false;  
     
-//ativar sistema de física
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.stage.backgroundColor = "#5c82bc";
-        
- 
-
-//teclas
-    this.shootKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CTRL);
-    this.jumpKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-    
-    
-    
-    
-    
-    
-    this.level1 =  this.game.add.tilemap('level1');
-    this.level1.addTilesetImage('tiles_level1','mapTiles');
-    this.wallsLayerBg = this.level1.createLayer('Bg');
-    this.wallsLayer = this.level1.createLayer('Walls');
-    this.espinhosLayer = this.level1.createLayer('Lava');
-    this.wallsLayer.resizeWorld();
-
-    //som    
+//Som    
     this.jumpSound = this.game.add.audio('jumpSound');
     this.pickupSound = this.game.add.audio('pickupSound');
     this.hurtSound = this.game.add.audio('hurtSound');
     this.enemyDeathSound= this.game.add.audio('enemyDeathSound');
+
+//Ativar sistema de física
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.game.stage.backgroundColor = "#5c82bc";
+        
+//Teclas
+    this.leftKey  = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    this.shootKey = this.game.input.keyboard.addKey(Phaser.Keyboard.CTRL);
+    this.jumpKey  = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    if (game.global.level_atual == 1){
+//Level1
+        this.levelAtual = this.game.add.tilemap('tileMapFase1');
+        game.global.tiles_level_atual = 'tiles_level1';            
+        this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase1');
+    }
+    else{
+        if (game.global.level_atual == 1){
+//Level2 -> AJUSTAR
+            this.levelAtual = this.game.add.tilemap('tileMapFase2');
+            game.global.tiles_level_atual = 'tiles_level1';            
+            this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase2');
+        }
+        else{
+//Level3 -> AJUSTAR
+            this.levelAtual = this.game.add.tilemap('tileMapFase3');
+            game.global.tiles_level_atual = 'tiles_level1';            
+            this.levelAtual.addTilesetImage(game.global.tiles_level_atual,'tileImageFase3');            
+        }
+        
+    }
+        
+    this.layerBackground = this.levelAtual.createLayer('Background');
+    this.layerArmadilha  = this.levelAtual.createLayer('Armadilha');
+    this.layerSaida      = this.levelAtual.createLayer('Saida');
+    this.layerPlataforma = this.levelAtual.createLayer('Plataforma');
+    this.layerPlataforma.resizeWorld();
+
+//Colisoes    
+    if (game.global.level_atual == 1){
+//Level1
+        this.levelAtual.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.layerPlataforma);
+        this.levelAtual.setCollision([23],true,this.layerArmadilha);
+        this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
+    }
+    else{
+        if (game.global.level_atual == 1){
+//Level2 -> AJUSTAR
+            this.levelAtual.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.layerPlataforma);
+            this.levelAtual.setCollision([23],true,this.layerArmadilha);
+            this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
+        }
+        else{
+//Level3 -> AJUSTAR
+            this.levelAtual.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.layerPlataforma);
+            this.levelAtual.setCollision([23],true,this.layerArmadilha);        
+            this.levelAtual.setCollision([52,53,62,63],true,this.layerSaida);
+        }        
+    }
     
-    this.level1.setCollisionByExclusion([23,24,25, 29,30, 31,32,33,34,35,39,40], true, this.wallsLayer);
-    this.level1.setCollision([23],true,this.espinhosLayer);
-    
-    
-    // Player
-    // Inicializando jogador  
-    this.player = this.game.add.sprite(160, 2600, 'player', 5);
+//Player
+    this.player = this.game.add.sprite(160, 2600, 'player', 5); 
     this.player.anchor.setTo(0.5, 0.5);
     this.game.physics.enable(this.player);
+    this.game.camera.follow(this.player);    
     this.player.body.gravity.y = 750;
     this.player.body.collideWorldBounds = true;
-    
-    this.game.camera.follow(this.player);
-    
     this.player.animations.add('walk',[3, 4, 5, 6, 7],6);
     this.player.animations.add('idle',[8,9],2);
     this.player.animations.add('jump',[11,12],2);
@@ -68,31 +98,27 @@ GameState.prototype.create = function () {
     this.keys = this.game.input.keyboard.createCursorKeys();
     this.jumpButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     
-    //Grupo diamonds
-    this.diamonds= this.game.add.physicsGroup();
-    //criando objetos do tiled
-    this.level1.createFromObjects('Items','diamond', 'items', 5, true, false, this.diamonds);
-
-    this.diamonds.forEach(function(diamond){
-//        diamond.anchor.setTo(0.5,0.5);
-        diamond.body.immovable = true;
-        diamond.animations.add('spin', [4, 5, 6, 7, 6, 5], 6, true);
-        diamond.animations.play('spin');    
-    });
+//Grupo Items
+    this.Items = this.game.add.physicsGroup();
+    this.levelAtual.createFromObjects('Items', 'item', 'tiles_items', 5 ,true, false, this.Items);
+    this.Items.forEach(function(item){
+//        item.anchor.setTo(0.5,0.5);
+        item.body.immovable = true;
+        item.animations.add('spin', [4, 5, 6, 7, 6, 5], 6, true);
+        item.animations.play('spin');    
+    }); 
     
-    //Criando plataformas
+//Grupo Plataformas
     this.platforms = this.game.add.physicsGroup();
-    this.level1.createFromObjects('Platforms','platform', 'tiles_level1', 23, true, false, this.platforms);
+//    this.levelAtual.createFromObjects('Platforms', 'platform', 'tiles_level1'               , 23, true, false, this.platforms);
+    this.levelAtual.createFromObjects('Platforms', 'platform', game.global.tiles_level_atual, 23, true, false, this.platforms); 
     this.platforms.forEach( function (platform) {
         platform.body.immovable = true;
     });
 
-        
-//    //Grupo de raposas lanceiras
-    this.spearfox= this.game.add.physicsGroup();
-    
-//    //Criando raposas lanceiras do tiled
-    this.level1.createFromObjects('Enemies','spearfox','spearfoxSS', 6, true, false, this.spearfox); 
+//Grupo Raposas Lanceiras
+    this.spearfox = this.game.add.physicsGroup();
+    this.levelAtual.createFromObjects('Enemies', 'spearfox', 'tiles_spearfox', 6, true, false, this.spearfox); 
     this.spearfox.forEach(function(spearfox){
         spearfox.anchor.setTo(0.5,0.5);
         spearfox.body.immovable = true;
@@ -109,15 +135,11 @@ GameState.prototype.create = function () {
         //console.debug(spearfox.getChildIndex(sensor));
     });
     
-    //Game State
-    this.totalDiamonds = this.diamonds.length;
-    this.collectedDiamonds = 0;
-    game.global.score = 0
+//Game State
+    this.totalItems = this.Items.length;
+    this.totalItemsCapturados = 0;
 
-    
-//    this.scoreText = this.game.add.text(350,50, "Score: 0", {font: "25px Ariak",fill:'#ffffff'});
-//    this.scoreText.fixedToCamera = true;        
-    
+//HUD    
     this.moldura = this.game.add.sprite(0, 0, 'bgMoldura') 
     this.moldura.fixedToCamera = true;  
     
@@ -125,6 +147,7 @@ GameState.prototype.create = function () {
     this.textScore.anchor.x = 0.5; 
     this.textScore.fixedToCamera = true;  
    
+    //menu
     this.menu = this.game.add.sprite(10, 10, 'menu')
     this.menu.scale.x = 1.1
     this.menu.scale.y = 1.1
@@ -132,7 +155,7 @@ GameState.prototype.create = function () {
     this.menu.events.onInputDown.add(gotoMenu, this);
     this.menu.fixedToCamera = true;  
 
-//sound
+    //som
     this.sound = this.game.add.sprite(785, 10, game.global.sound_sprite)
     this.sound.scale.x = 1.1
     this.sound.scale.y = 1.1
@@ -140,7 +163,7 @@ GameState.prototype.create = function () {
     this.sound.events.onInputDown.add(setarSound, this);        
     this.sound.fixedToCamera = true;  
 
-//pause
+    //pausar
     this.pause = this.game.add.sprite(735, 10, 'pause')
     this.pause.scale.x = 1.1
     this.pause.scale.y = 1.1
@@ -148,11 +171,11 @@ GameState.prototype.create = function () {
     this.pause.events.onInputDown.add(setarPause, this);           
     this.pause.fixedToCamera = true;  
 
+    //life
     this.life = this.game.add.sprite(80, 5, 'life', 0);
     this.life.fixedToCamera = true;  
     this.life.scale.x = 0.6
     this.life.scale.y = 0.6
-
 };
 
 GameState.prototype.update = function () {
@@ -162,12 +185,13 @@ GameState.prototype.update = function () {
         }
     });    
     
-    this.game.physics.arcade.collide(this.player, this.wallsLayer);
+    this.game.physics.arcade.collide(this.player, this.layerPlataforma);
     this.game.physics.arcade.collide(this.player, this.platforms, platformFall, null, this);    
-    this.game.physics.arcade.overlap(this.player, this.diamonds, coletarItem, null, this);
-    this.game.physics.arcade.collide(this.player, this.espinhosLayer, colisaoMortal, null, this);
+    this.game.physics.arcade.overlap(this.player, this.Items, coletarItem, null, this);
+    this.game.physics.arcade.collide(this.player, this.layerArmadilha, colisaoMortal, null, this);
+    this.game.physics.arcade.collide(this.player, this.layerSaida, proximoNivel, null, this);
 
-    this.game.physics.arcade.collide(this.spearfox, this.wallsLayer);
+    this.game.physics.arcade.collide(this.spearfox, this.layerPlataforma);
     //this.game.physics.arcade.collide(this.player, this.spearfox, colisaoInimigo, null, this);
     
     
